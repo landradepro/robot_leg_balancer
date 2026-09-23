@@ -1,0 +1,41 @@
+<mujoco model="balancing_leg">
+  <compiler angle="radian" autolimits="true"/>
+  <option timestep="0.002" integrator="implicitfast"/>
+  <statistic center="0 0 0.6" extent="1.5"/>
+
+  <worldbody>
+    <light pos="0 -2 3" dir="0 1 -1"/>
+    <geom name="floor" type="plane" size="5 5 0.1" rgba="0.75 0.8 0.85 1"/>
+
+    <!-- The foot is the root. It can slide in x and z and rotate about y, so the motion stays in a 2D plane. -->
+    <body name="foot" pos="0 0 0.03">
+      <joint name="root_x" type="slide" axis="1 0 0"/>
+      <joint name="root_z" type="slide" axis="0 0 1"/>
+      <joint name="root_pitch" type="hinge" axis="0 1 0"/>
+      <!-- Foot length is the first thing to experiment with: smaller = harder to balance -->
+      <geom name="foot_geom" type="box" size="0.06 0.05 0.03" pos="0.02 0 0" mass="0.8" rgba="0.2 0.2 0.2 1"/>
+
+      <body name="shank" pos="0 0 0.03">
+        <joint name="ankle" type="hinge" axis="0 1 0" range="-0.8 0.8" damping="1" armature="0.02"/>
+        <geom type="capsule" fromto="0 0 0 0 0 0.4" size="0.03" mass="1.0" rgba="0.9 0.5 0.1 1"/>
+
+        <body name="thigh" pos="0 0 0.4">
+          <joint name="knee" type="hinge" axis="0 1 0" range="0 2.2" damping="1" armature="0.02"/>
+          <geom type="capsule" fromto="0 0 0 0 0 0.4" size="0.04" mass="1.5" rgba="0.9 0.6 0.2 1"/>
+
+          <body name="torso" pos="0 0 0.4">
+            <joint name="hip" type="hinge" axis="0 1 0" range="-1.5 1.5" damping="1" armature="0.02"/>
+            <geom type="capsule" fromto="0 0 0 0 0 0.3" size="0.06" mass="4.0" rgba="0.2 0.5 0.9 1"/>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <!-- Each motor tracks a target angle (ctrl) with a spring (kp) and a damper (kv), with limited torque -->
+  <actuator>
+    <position name="ankle" joint="ankle" kp="150" kv="15" ctrlrange="-0.8 0.8" forcerange="-25 25"/>
+    <position name="knee"  joint="knee"  kp="150" kv="15" ctrlrange="0 2.2"    forcerange="-60 60"/>
+    <position name="hip"   joint="hip"   kp="150" kv="15" ctrlrange="-1.5 1.5" forcerange="-60 60"/>
+  </actuator>
+</mujoco>
