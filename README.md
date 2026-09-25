@@ -5,6 +5,10 @@ upright and reject pushes. It uses [MuJoCo](https://mujoco.org/) and
 [Gymnasium](https://gymnasium.farama.org/) for the simulation and
 [Stable-Baselines3](https://stable-baselines3.readthedocs.io/) (PPO) for reinforcement learning.
 
+![demo](media/leg_balance.gif)
+
+Full video: [media/leg_balance.mp4](media/leg_balance.mp4)
+
 ## Setup
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
