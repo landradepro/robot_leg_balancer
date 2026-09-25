@@ -166,7 +166,3 @@ This creates `leg_balance.mp4` and `leg_balance.gif`. The numbers are the model,
 - Defining a "fall" only by torso height was a bug: it counted a normal crouch as falling, so the policy could never learn to crouch into a push. Using the torso tilt angle fixed it.
 - Training directly on very hard pushes (up to 100 N) learned nothing useful. Starting at 40 N and increasing the difficulty worked.
 
-## Next steps
-
-- A hopping leg, starting from Gymnasium's `Hopper-v5`.
-- Running the same policy in NVIDIA Isaac Sim.
