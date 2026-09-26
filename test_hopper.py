@@ -1,5 +1,5 @@
 import os
-os.environ["MUJOCO_GL"] = "egl"  # headless rendering; use "osmesa" if egl fails
+os.environ["MUJOCO_GL"] = "egl" 
 import gymnasium as gym
 import imageio
 
